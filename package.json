@@ -1,0 +1,185 @@
+{
+  "name": "pulsar-ide-svelte-alpha",
+  "main": "./lib/main",
+  "version": "0.0.1",
+  "description": "A Svelte IDE provider",
+  "keywords": [],
+  "repository": "https://github.com/savetheclocktower/pulsar-ide-svelte-alpha",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "activationHooks": [
+    "source.svelte:root-scope-used"
+  ],
+  "dependencies": {
+    "@savetheclocktower/atom-languageclient": "1.17.0",
+    "svelte-language-server": "^0.16.1"
+  },
+  "configSchema": {
+    "linter": {
+      "type": "object",
+      "order": 2,
+      "title": "Linter",
+      "properties": {
+        "enable": {
+          "title": "Enable",
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to show diagnostic messages via the `linter` package. (To change this setting for a specific kind of file, use a scoped setting.)"
+        },
+        "ignoredCodes": {
+          "title": "Ignored Codes",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "A comma-separated list of diagnostic codes that should be ignored by the linter."
+        },
+        "ignoredCodesWhenBufferIsModified": {
+          "title": "Ignored Codes (while buffer is modified)",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "A comma-separated list of diagnostic codes that should be ignored by the linter **until you save the buffer**. (This can suppress linter messages that interrupt you to remind you to do things that you were about to do anyway.)"
+        },
+        "includeMessageCodeInMessageBody": {
+          "title": "Include Message Code in Message Body",
+          "type": "boolean",
+          "default": false,
+          "description": "When enabled, will include the code for a linter message at the end of its body."
+        }
+      }
+    },
+    "symbols": {
+      "order": 3,
+      "type": "object",
+      "title": "Symbols",
+      "properties": {
+        "enable": {
+          "title": "Enable",
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to provide symbols for the current file, for project-wide symbol search, and for going to the definition of a symbol. (To change this setting for a specific kind of file, use a scoped setting.)"
+        },
+        "ignoredTags": {
+          "title": "Ignored Tags",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "A comma-separated list of tags that should be ignored when generating symbols."
+        },
+        "minimumQueryLength": {
+          "title": "Minimum Query Length",
+          "default": 3,
+          "type": "number",
+          "description": "The minimum number of characters a user must type on a **project-wide symbol search** before the request is forwarded to the language server."
+        }
+      }
+    },
+    "autocomplete": {
+      "order": 4,
+      "type": "object",
+      "title": "Autocomplete",
+      "collapsed": false,
+      "properties": {
+        "enable": {
+          "title": "Enable",
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to suggest contextual completions with `autocomplete-plus`. (Takes effect after a window reload or a restart of Pulsar.)"
+        }
+      }
+    },
+    "advanced": {
+      "order": 5,
+      "collapsed": true,
+      "type": "object",
+      "title": "Advanced",
+      "properties": {
+        "additionalScopes": {
+          "title": "Additional Scopes",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "A comma-separated list of additional language scopes for which the language server's features should be used."
+        }
+      }
+    }
+  },
+  "consumedServices": {
+    "linter-indie": {
+      "versions": {
+        "2.0.0": "consumeLinterV2"
+      }
+    },
+    "datatip": {
+      "versions": {
+        "0.1.0": "consumeDatatip"
+      }
+    },
+    "signature-help": {
+      "versions": {
+        "0.1.0": "consumeSignatureHelp"
+      }
+    }
+  },
+  "providedServices": {
+    "intentions:list": {
+      "versions": {
+        "1.0.0": "provideIntentionsList"
+      }
+    },
+    "symbol.provider": {
+      "description": "Allows external sources to suggest symbols for a given file or project.",
+      "versions": {
+        "1.0.0": "provideSymbols"
+      }
+    },
+    "autocomplete.provider": {
+      "versions": {
+        "2.0.0": "provideAutocomplete"
+      }
+    },
+    "code-actions": {
+      "versions": {
+        "0.1.0": "provideCodeActions"
+      }
+    },
+    "code-format.range": {
+      "versions": {
+        "0.1.0": "provideCodeFormat"
+      }
+    },
+    "code-highlight": {
+      "versions": {
+        "0.1.0": "provideCodeHighlight"
+      }
+    },
+    "definitions": {
+      "versions": {
+        "0.1.0": "provideDefinitions"
+      }
+    },
+    "find-references": {
+      "versions": {
+        "0.1.0": "provideFindReferences"
+      }
+    },
+    "outline-view": {
+      "versions": {
+        "0.1.0": "provideOutlines"
+      }
+    }
+  },
+  "devDependencies": {
+    "eslint": "^8.45.0"
+  }
+}
